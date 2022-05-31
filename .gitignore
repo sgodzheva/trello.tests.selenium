@@ -1,3 +1,4 @@
 /src/Trello.Tests.Selenium/.vs/*
 /src/Trello.Tests.Selenium/Trello.Tests.Selenium/bin/*
 /src/Trello.Tests.Selenium/Trello.Tests.Selenium/obj/*
+/src/Trello.Tests.Selenium/Trello.Tests.Selenium/Settings/prod.runsettings

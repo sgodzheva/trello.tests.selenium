@@ -10,6 +10,8 @@ namespace Trello.Tests.Selenium
     [TestClass]
     public class UnitTest1
     {
+        public TestContext TestContext { get; set; }
+
         [TestMethod]
         public void TestMethod1()
         {
@@ -18,9 +20,9 @@ namespace Trello.Tests.Selenium
 
             var webDriver = new ChromeDriver();
 
-            webDriver.Navigate().GoToUrl("https://www.google.com");
+            webDriver.Navigate().GoToUrl(TestContext.Properties["webAppUrl"].ToString());
 
-            Assert.IsTrue(webDriver.Title.Contains("Google"));
+            Assert.IsTrue(webDriver.Title.Contains("Trello"));
             Thread.Sleep(10000);
             webDriver.Quit();
         }
