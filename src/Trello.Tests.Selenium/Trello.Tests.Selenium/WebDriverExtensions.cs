@@ -10,7 +10,7 @@ namespace Trello.Tests.Selenium
 {
     public static class WebDriverExtensions
     {
-        public static bool CheckIfExists(this WebDriver driver, By by)
+        public static bool CheckIfExists(this IWebDriver driver, By by)
         {
             try
             {
@@ -23,7 +23,7 @@ namespace Trello.Tests.Selenium
             return true;
         }
 
-        public static IWebElement WaitElement(this WebDriver driver, By by)
+        public static IWebElement WaitElement(this IWebDriver driver, By by)
         {
             for (int i = 0; i < 50; i++)
             {

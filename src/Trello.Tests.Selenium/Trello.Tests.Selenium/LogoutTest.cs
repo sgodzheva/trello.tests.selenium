@@ -10,7 +10,7 @@ using WebDriverManager.Helpers;
 namespace Trello.Tests.Selenium
 {
     [TestClass]
-    public class LoginTest
+    public class LogoutTest
     {
         public TestContext TestContext { get; set; }
 
@@ -28,7 +28,7 @@ namespace Trello.Tests.Selenium
         }
 
         [TestMethod]
-        public void TestSuccessfullLogin()
+        public void TestSuccessfullLogout()
         {
             TrelloWebApp webApp = new TrelloWebApp(webDriver);
             webApp.Open(TestContext.Properties["webAppUrl"].ToString());
@@ -37,11 +37,10 @@ namespace Trello.Tests.Selenium
             string password = TestContext.Properties["webAppPassword"].ToString();
             webApp.Login(username, password);
 
-            bool profileButtonExists = webDriver.CheckIfExists(XPath.Attribute("data-test-id", "header-member-menu-button"));
-            Assert.IsTrue(profileButtonExists);
+            webApp.Logout();
 
-            bool homeLinkExists = webDriver.CheckIfExists(XPath.Attribute("data-test-id", "home-link"));
-            Assert.IsTrue(homeLinkExists);
+            bool loginbuttonExists = webDriver.CheckIfExists(XPath.Attribute("href", "/login"));
+            Assert.IsTrue(loginbuttonExists);
         }
 
         [TestCleanup]
