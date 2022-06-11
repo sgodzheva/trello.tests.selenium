@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Trello.Tests.Selenium
+namespace Trello.Tests.Selenium.Utilities
 {
     public class XPath
     {
@@ -13,6 +13,12 @@ namespace Trello.Tests.Selenium
         {
             return By.XPath($"//*[@{name}='{value}']");
         }
+
+        public static By DataTestId(string value)
+        {
+            return Attribute("data-test-id", value);
+        }
     }
+
 }
 

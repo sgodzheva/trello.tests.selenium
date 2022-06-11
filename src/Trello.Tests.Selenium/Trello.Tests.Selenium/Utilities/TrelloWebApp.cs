@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Trello.Tests.Selenium
+namespace Trello.Tests.Selenium.Utilities
 {
     public class TrelloWebApp
     {
@@ -36,7 +36,10 @@ namespace Trello.Tests.Selenium
             var atlasianLoginButton = webDriver.WaitElement(By.Id("login-submit"));
             atlasianLoginButton.Click();
 
-            webDriver.WaitElement(XPath.Attribute("data-test-id", "header-member-menu-button"));
+            if (!webDriver.CheckIfExists(XPath.DataTestId("header-member-menu-button")))
+            {
+                throw new InvalidOperationException("Login failed");
+            }
         }
 
         public void Logout()
@@ -49,7 +52,10 @@ namespace Trello.Tests.Selenium
             var atlasianLogout = webDriver.WaitElement(XPath.Attribute("data-testid", "logout-button"));
             atlasianLogout.Click();
 
-            webDriver.WaitElement(XPath.Attribute("href", "/login"));
+            if (!webDriver.CheckIfExists(XPath.Attribute("href", "/login")))
+            {
+                throw new InvalidOperationException("Logout failed");
+            }
         }
     }
 }
