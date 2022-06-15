@@ -9,6 +9,12 @@ namespace Trello.Tests.Selenium.Boards
     public class CreateBoardTest
     {
         public TestContext TestContext { get; set; }
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            var trelloClient = TestContext.GetApiClient();
+            trelloClient.DeleteBoardWithName(TestContext.GetTestName());
+        }
 
         [TestMethod]
         public void TestSuccessfullCreationBoard()

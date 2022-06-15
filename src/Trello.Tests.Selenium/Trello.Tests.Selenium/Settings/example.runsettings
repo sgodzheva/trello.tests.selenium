@@ -3,9 +3,14 @@
 
 	<!-- Parameters used by tests at run time -->
 	<TestRunParameters>
-		<Parameter name="webAppUrl" value="https://trello.com/something" />
+		<Parameter name="webAppUrl" value="https://trello.com/" />
 		<Parameter name="webAppUserName" value="Admin" />
 		<Parameter name="webAppPassword" value="Password" />
+
+		<Parameter name="apiUrl" value="https://api.trello.com" />
+		<Parameter name="trelloKey" value="" />
+		<Parameter name="trelloToken" value="" />
+		<Parameter name="userName" value="" />
 	</TestRunParameters>
 
 </RunSettings>

@@ -26,5 +26,15 @@ namespace Trello.Tests.Selenium.Utilities
             return $"{className}_{testContext.TestName}";
         }
 
+        public static TrelloApiClient GetApiClient(this TestContext testContext)
+        {
+            string baseUrl = testContext.Properties["apiUrl"].ToString();
+            string trelloKey = testContext.Properties["trelloKey"].ToString();
+            string trelloToken = testContext.Properties["trelloToken"].ToString();
+            string userName = testContext.Properties["userName"].ToString();
+            TrelloApiClient trelloClient = new TrelloApiClient(baseUrl, trelloKey, trelloToken, userName);
+            return trelloClient;
+        }
+
     }
 }
