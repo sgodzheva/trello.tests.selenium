@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 using System.Threading;
 
 namespace Trello.Tests.Selenium.Utilities
@@ -10,6 +11,7 @@ namespace Trello.Tests.Selenium.Utilities
             int tries = waitTime / 100;
             for (int i = 0; i < tries; i++)
             {
+
                 try
                 {
                     var element = driver.FindElement(by);
@@ -18,8 +20,10 @@ namespace Trello.Tests.Selenium.Utilities
                         return true;
                     }
                 }
-                catch { }
-                Thread.Sleep(100);
+                catch (Exception ex)
+                {
+                    Thread.Sleep(100);
+                }
             }
             return false;
         }

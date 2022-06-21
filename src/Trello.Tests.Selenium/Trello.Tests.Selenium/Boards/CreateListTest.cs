@@ -5,35 +5,35 @@ using Trello.Tests.Selenium.Utilities;
 namespace Trello.Tests.Selenium.Boards
 {
     [TestClass]
-    public class CreateBoardTest
+    public class CreateListTest
     {
         public TestContext TestContext { get; set; }
 
         [TestInitialize]
         public void TestInitialize()
         {
-            var trelloClient = TestContext.GetApiClient();
-            trelloClient.DeleteBoardWithName(TestContext.GetTestName());
+            var trelloclient = TestContext.GetApiClient();
+            trelloclient.DeleteBoardWithName(TestContext.GetTestName());
         }
 
         [TestMethod]
-        public void TestSuccessfullCreationBoard()
+        public void TestSuccessfullListCreation()
         {
             using var webDriver = Browser.GetChrome();
-
             TrelloWebApp webApp = new TrelloWebApp(webDriver);
 
             webApp.Open(TestContext.GetWebAppUrl());
-
             webApp.Login(TestContext.GetWebAppUsername(), TestContext.GetWebAppPassword());
 
             webApp.OpenTestProject();
-
             webApp.CreateBoard(TestContext.GetTestName());
 
-            var boardTitleHeader = webDriver.WaitElement(By.ClassName("js-board-editing-target"));
+            webApp.CreateList("TO DO");
 
-            Assert.AreEqual(TestContext.GetTestName(), boardTitleHeader.Text);
+            var checkListButton = webDriver.WaitElement(By.ClassName("list-header-name"));
+
+            Assert.AreEqual("TO DO", checkListButton.Text);
         }
+
     }
 }

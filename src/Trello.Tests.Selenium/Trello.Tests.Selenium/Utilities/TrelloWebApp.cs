@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System;
+using System.Threading;
 
 namespace Trello.Tests.Selenium.Utilities
 {
@@ -51,6 +52,54 @@ namespace Trello.Tests.Selenium.Utilities
             {
                 throw new InvalidOperationException("Logout failed");
             }
+        }
+
+        public void OpenTestProject()
+        {
+            var workspaceButton = webDriver.FindElement(XPath.DataTestId("workspace-switcher"));
+            workspaceButton.Click();
+
+            var projectButtons = webDriver.FindElements(XPath.DataTestId("workspace-switcher-popover-tile"));
+            foreach (var item in projectButtons)
+            {
+                var paragraph = item.FindElement(By.ClassName("_3Ee228tBbaQOTJ"));
+                if (paragraph.Text == "Testing Project")
+                {
+                    item.Click();
+                }
+            }
+
+            webDriver.CheckIfExists(By.ClassName("workspace-boards-page-layout"));
+
+        }
+
+        public void CreateBoard(string boardName)
+        {
+            var parentElement = webDriver.WaitElement(By.ClassName("workspace-boards-page-layout"));
+
+            var createBoardButton = parentElement.FindElement(XPath.DataTestId("create-board-tile"));
+            createBoardButton.Click();
+
+            var boardTitleField = webDriver.WaitElement(XPath.DataTestId("create-board-title-input"));
+            boardTitleField.SendKeys(boardName);
+
+            var boardSubmitButton = webDriver.WaitElement(XPath.DataTestId("create-board-submit-button"));
+            //Waiting because the button is disabled and we cannot click it.
+            Thread.Sleep(1000);
+            boardSubmitButton.Click();
+
+            webDriver.CheckIfExists(By.ClassName("js-board-editing-target"));
+        }
+
+        public void CreateList(string listName)
+        {
+            var listField = webDriver.WaitElement(By.ClassName("list-name-input"));
+            listField.SendKeys(listName);
+
+            var addListButton = webDriver.FindElement(XPath.Attribute("value", "Add list"));
+            addListButton.Click();
+
+            var checkListButton = webDriver.WaitElement(By.ClassName("list-header-name"));
         }
     }
 }
