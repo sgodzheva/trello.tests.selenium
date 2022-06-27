@@ -1,12 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System.Threading;
 using Trello.Tests.Selenium.Utilities;
 
 namespace Trello.Tests.Selenium.Boards
 {
     [TestClass]
-    public class CreateCardTest
+    public class CardTransitionTest
     {
         public TestContext TestContext { get; set; }
 
@@ -18,7 +19,7 @@ namespace Trello.Tests.Selenium.Boards
         }
 
         [TestMethod]
-        public void TestSuccessfullCardCreation()
+        public void TestSuccessfullCardTransition()
         {
             using var webDriver = Browser.GetChrome();
             TrelloWebApp webApp = new TrelloWebApp(webDriver);
@@ -43,7 +44,31 @@ namespace Trello.Tests.Selenium.Boards
             Thread.Sleep(1000);
 
             var cardElement = webDriver.WaitElement(By.ClassName("list-card-title"));
-            Assert.AreEqual("@@@@@", cardElement.Text);
+
+            webApp.CreateList("In Progress");
+
+            cardElement.Click();
+
+            var moveButton = webDriver.WaitElement(By.ClassName("js-move-card"));
+            moveButton.Click();
+
+            var selectListButton = webDriver.WaitElement(By.ClassName("js-select-list"));
+            selectListButton.Click();
+
+            var selectElement = new SelectElement(selectListButton);
+            selectElement.SelectByText("In Progress");
+
+            var move = webDriver.WaitElement(XPath.Attribute("value", "Move"));
+            move.Click();
+
+            var inProgressTitle = webDriver.WaitElement(XPath.Attribute("aria-label", "In Progress"));
+
+            var inProgressList = inProgressTitle.GetParent().GetParent();
+
+            var inProgressCard = inProgressList.FindElement(By.ClassName("list-card-title"));
+
+            Assert.IsTrue(inProgressCard.Text == "@@@@@");
+            Thread.Sleep(3000);
         }
     }
 }

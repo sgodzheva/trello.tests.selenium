@@ -1,5 +1,7 @@
 ﻿using OpenQA.Selenium;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Trello.Tests.Selenium.Utilities
@@ -33,5 +35,18 @@ namespace Trello.Tests.Selenium.Utilities
             driver.CheckIfExists(by);
             return driver.FindElement(by);
         }
+
+        public static List<IWebElement> WaitElements(this IWebDriver driver, By by)
+        {
+            driver.CheckIfExists(by);
+            return driver.FindElements(by).ToList();
+        }
+
+        public static IWebElement GetParent(this IWebElement element)
+        {
+            return element.FindElement(By.XPath("./.."));
+        }
+
+
     }
 }

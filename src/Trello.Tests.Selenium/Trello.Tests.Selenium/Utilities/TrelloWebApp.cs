@@ -59,10 +59,10 @@ namespace Trello.Tests.Selenium.Utilities
             var workspaceButton = webDriver.FindElement(XPath.DataTestId("workspace-switcher"));
             workspaceButton.Click();
 
-            var projectButtons = webDriver.FindElements(XPath.DataTestId("workspace-switcher-popover-tile"));
+            var projectButtons = webDriver.WaitElements(XPath.DataTestId("workspace-switcher-popover-tile"));
             foreach (var item in projectButtons)
             {
-                var paragraph = item.FindElement(By.ClassName("_3Ee228tBbaQOTJ"));
+                var paragraph = item.FindElement(By.TagName("p"));
                 if (paragraph.Text == "Testing Project")
                 {
                     item.Click();
