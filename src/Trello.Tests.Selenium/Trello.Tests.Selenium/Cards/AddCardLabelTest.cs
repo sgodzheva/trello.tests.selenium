@@ -69,8 +69,8 @@ namespace Trello.Tests.Selenium.Cards
             var labelInsideCard = labelField.FindElement(By.ClassName("label-text"));
             Assert.AreEqual("NewLabel", labelInsideCard.Text);
 
-            var closeCardButton = webDriver.WaitElement(By.ClassName("icon-md"));
-            closeCardButton.Click();
+            var closeButton = webDriver.FindElement(By.ClassName("dialog-close-button"));
+            closeButton.Click();
 
             var cardLabels = webDriver.WaitElement(By.ClassName("list-card-labels"));
 
