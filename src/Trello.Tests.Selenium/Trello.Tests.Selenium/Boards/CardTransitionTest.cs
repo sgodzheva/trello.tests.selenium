@@ -66,9 +66,19 @@ namespace Trello.Tests.Selenium.Boards
             var inProgressList = inProgressTitle.GetParent().GetParent();
 
             var inProgressCard = inProgressList.FindElement(By.ClassName("list-card-title"));
+            var closeButton = webDriver.FindElement(By.ClassName("dialog-close-button"));
+            closeButton.Click();
 
             Assert.IsTrue(inProgressCard.Text == "@@@@@");
+            Thread.Sleep(1000);
+
+            inProgressCard.Click();
+            var checkCard = webDriver.WaitElement(By.ClassName("js-open-move-from-header"));
+            Assert.AreEqual("In Progress", checkCard.Text);
+
             Thread.Sleep(3000);
+
+
         }
     }
 }
