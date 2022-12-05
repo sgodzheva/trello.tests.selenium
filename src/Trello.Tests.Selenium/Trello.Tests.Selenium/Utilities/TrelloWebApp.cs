@@ -25,14 +25,17 @@ namespace Trello.Tests.Selenium.Utilities
             var usernameInput = webDriver.FindElement(By.Id("user"));
             usernameInput.SendKeys(username);
 
-            var atlasianLogin = webDriver.WaitElement(XPath.Attribute("value", "Log in with Atlassian"));
-            atlasianLogin.Click();
-            var atlasianPassword = webDriver.WaitElement(By.Id("password"));
-            atlasianPassword.SendKeys(password);
-            var atlasianLoginButton = webDriver.WaitElement(By.Id("login-submit"));
-            atlasianLoginButton.Click();
+            var continueButton = webDriver.WaitElement(By.Id("login"));
+            continueButton.Click();
 
-            if (!webDriver.CheckIfExists(XPath.DataTestId("header-member-menu-button")))
+            var passwordButton = webDriver.WaitElement(XPath.Attribute("name", "password"));
+            passwordButton.SendKeys(password);
+
+            var loginButtonafterPassword = webDriver.FindElement(By.Id("login-submit"));
+            loginButtonafterPassword.Click();
+
+            //check if we actually logged in
+            if (!webDriver.CheckIfExists(XPath.Attribute("data-testid", "header-member-menu-button")))
             {
                 throw new InvalidOperationException("Login failed");
             }
