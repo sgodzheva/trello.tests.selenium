@@ -40,47 +40,42 @@ namespace Trello.Tests.Selenium.Cards
             cardButtonField.SendKeys("@@@@@");
             var addCardButton = webDriver.FindElement(XPath.Attribute("value", "Add card"));
             addCardButton.Click();
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
 
             var cardElement = webDriver.WaitElement(By.ClassName("list-card-title"));
             cardElement.Click();
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
 
             var addLabelButton = webDriver.WaitElement(By.ClassName("js-edit-labels"));
             addLabelButton.Click();
 
-            var labelPencilIcon = webDriver.WaitElement(By.ClassName("card-label-edit-button"));
+
+            var labelPencilIcon = webDriver.WaitElement(By.XPath("/html/body/div[6]/div/section/div/div/ul/li[1]/label/span[2]/div/button"));
             labelPencilIcon.Click();
 
-            var labelNameField = webDriver.WaitElement(By.Id("labelName"));
+            var labelNameField = webDriver.WaitElement(By.XPath("/html/body/div[6]/div/section/div/div[2]/input"));
             labelNameField.Click();
             labelNameField.SendKeys("NewLabel");
 
-            var labelWindow = webDriver.WaitElement(By.ClassName("edit-label"));
-
-            var labelSaveButton = labelWindow.FindElement(By.ClassName("js-submit"));
+            var labelSaveButton = webDriver.WaitElement(By.XPath("/html/body/div[6]/div/section/div/div[4]/button[1]"));
             labelSaveButton.Click();
 
-            var labelButton = webDriver.WaitElement(By.ClassName("card-label"));
-            labelButton.Click();
+            var label = webDriver.WaitElement(By.XPath("/html/body/div[6]/div/section/div/div/ul/li[1]/label"));
+            label.Click();
 
-            var labelField = webDriver.WaitElement(By.ClassName("card-detail-item-labels"));
-
-            var labelInsideCard = labelField.FindElement(By.ClassName("label-text"));
-            Assert.AreEqual("NewLabel", labelInsideCard.Text);
+            var labelField = webDriver.WaitElement(XPath.DataTestId("card-back-labels-container"));
+            var labelButton = labelField.FindElement(XPath.DataTestId("card-label"));
+            Assert.AreEqual("NewLabel", labelButton.Text);
 
             var closeButton = webDriver.FindElement(By.ClassName("dialog-close-button"));
             closeButton.Click();
 
-            var cardLabels = webDriver.WaitElement(By.ClassName("list-card-labels"));
+            var cardLabels = webDriver.WaitElement(By.ClassName("list-card-front-labels-container"));
 
-            var labelWithoutText = cardLabels.FindElement(By.ClassName("card-label"));
+            var labelWithoutText = cardLabels.FindElement(XPath.DataTestId("compact-card-label"));
             labelWithoutText.Click();
 
-            var labelOnCard = webDriver.WaitElement(By.ClassName("label-text"));
-            Assert.AreEqual("NewLabel", labelOnCard.Text);
-
-            Thread.Sleep(1000);
+            Assert.AreEqual("NewLabel", labelWithoutText.Text);
         }
     }
 }

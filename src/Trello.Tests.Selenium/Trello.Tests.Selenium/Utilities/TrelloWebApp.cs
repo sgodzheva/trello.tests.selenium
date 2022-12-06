@@ -35,7 +35,7 @@ namespace Trello.Tests.Selenium.Utilities
             loginButtonafterPassword.Click();
 
             //check if we actually logged in
-            if (!webDriver.CheckIfExists(XPath.Attribute("data-testid", "header-member-menu-button")))
+            if (!webDriver.CheckIfExists(XPath.DataTestId("header-member-menu-button")))
             {
                 throw new InvalidOperationException("Login failed");
             }
@@ -43,12 +43,12 @@ namespace Trello.Tests.Selenium.Utilities
 
         public void Logout()
         {
-            var profileButton = webDriver.WaitElement(XPath.Attribute("data-test-id", "header-member-menu-button"));
+            var profileButton = webDriver.WaitElement(XPath.DataTestId("header-member-menu-button"));
             profileButton.Click();
 
-            var logoutButton = webDriver.WaitElement(XPath.Attribute("data-test-id", "header-member-menu-logout"));
+            var logoutButton = webDriver.WaitElement(XPath.DataTestId("header-member-menu-logout"));
             logoutButton.Click();
-            var atlasianLogout = webDriver.WaitElement(XPath.Attribute("data-testid", "logout-button"));
+            var atlasianLogout = webDriver.WaitElement(XPath.DataTestId("logout-button"));
             atlasianLogout.Click();
 
             if (!webDriver.CheckIfExists(XPath.Attribute("href", "/login")))

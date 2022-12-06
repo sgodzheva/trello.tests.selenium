@@ -11,7 +11,7 @@ namespace Trello.Tests.Selenium.Utilities
 
         public static By DataTestId(string value)
         {
-            return Attribute("data-test-id", value);
+            return Attribute("data-testid", value);
         }
     }
 
